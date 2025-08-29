@@ -79,6 +79,7 @@ export class PdfUploader extends LitElement {
       for (let i = 1; i <= pdf.numPages; i++) {
         const page = await pdf.getPage(i);
         const content = await page.getTextContent();
+        //@ts-expect-error
         const strings = content.items.map((item) => item.str).join(" ");
 
         if (strings.trim().length > 5) {
@@ -89,7 +90,7 @@ export class PdfUploader extends LitElement {
           const ctx = canvas.getContext("2d")!;
           canvas.width = Math.floor(viewport.width);
           canvas.height = Math.floor(viewport.height);
-
+          //@ts-expect-error
           await page.render({ canvasContext: ctx, viewport }).promise;
           const dataUrl = canvas.toDataURL();
 
